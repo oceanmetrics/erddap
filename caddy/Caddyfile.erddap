@@ -1,0 +1,18 @@
+# paste into the host Caddyfile; mirrors CalCOFI's erddap.calcofi.io block incl. the bulk-download guard
+erddap.oceanmetrics.io {
+  handle /robots.txt {
+    respond "User-agent: *
+Disallow: /erddap/tabledap/
+Disallow: /erddap/griddap/
+Sitemap: https://erddap.oceanmetrics.io/erddap/sitemap.xml" 200
+  }
+  # reject query-less bulk dumps of whole datasets (see CalCOFI 2026-09-08 outage)
+  @bulk path_regexp ^/erddap/(tabledap|griddap)/[^/]+\.(csv|csvp|csv0|json|jsonlCSV|nc|parquet|parquetWMeta)$
+  @noquery not query *
+  handle @bulk {
+    handle @noquery {
+      respond "Add a constraint or subset to your request." 400
+    }
+  }
+  reverse_proxy erddap:8080
+}

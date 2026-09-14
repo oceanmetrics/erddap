@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<erddapDatasets>
+<!-- erddap.oceanmetrics.io — re-served upstream grids. <redirect>false</redirect> makes THIS server
+     fetch and reformat the data so browser clients get CORS + Parquet. Keep datasetIDs identical
+     to the source so URLs are interchangeable. -->
+<cacheMinutes>60</cacheMinutes>
+<decompressedCacheMaxGB>10</decompressedCacheMaxGB>
+<loadDatasetsMinMinutes>15</loadDatasetsMinMinutes>
+
+<dataset type="EDDGridFromErddap" datasetID="jplMURSST41" active="true">
+  <sourceUrl>https://coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41</sourceUrl>
+  <redirect>false</redirect>
+</dataset>
+
+<dataset type="EDDGridFromErddap" datasetID="noaacwNPPVIIRSchlaDaily" active="true">
+  <sourceUrl>https://coastwatch.noaa.gov/erddap/griddap/noaacwNPPVIIRSchlaDaily</sourceUrl>
+  <redirect>false</redirect>
+</dataset>
+
+<dataset type="EDDGridFromErddap" datasetID="noaa_aoml_seascapes_8day" active="true">
+  <sourceUrl>https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_seascapes_8day</sourceUrl>
+  <redirect>false</redirect>
+</dataset>
+
+</erddapDatasets>

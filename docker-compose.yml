@@ -1,0 +1,28 @@
+# erddap.oceanmetrics.io — adapted from CalCOFI/server docker-compose.yml (erddap service)
+services:
+  erddap:
+    container_name: erddap
+    image: erddap/erddap:${ERDDAP_TAG:-v2.31.1}
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    volumes:
+      - ./content:/usr/local/tomcat/content/erddap
+      - erddap_data:/erddapData
+    environment:
+      ERDDAP_MEMORY: ${ERDDAP_MEMORY:-2g}
+      ERDDAP_baseUrl: http://localhost:8090
+      ERDDAP_baseHttpsUrl: https://erddap.oceanmetrics.io
+      ERDDAP_bigParentDirectory: /erddapData/
+      ERDDAP_flagKeyKey: ${ERDDAP_flagKeyKey}
+      ERDDAP_enableCors: "true"
+      ERDDAP_corsAllowOrigin: "*"
+      ERDDAP_adminInstitution: Ocean Metrics LLC
+      ERDDAP_adminInstitutionUrl: https://oceanmetrics.io
+      ERDDAP_adminIndividualName: Ben Best
+      ERDDAP_adminEmail: ben@oceanmetrics.io
+      ERDDAP_adminCountry: USA
+    # the host Caddy reverse-proxies erddap:8080 (see caddy/Caddyfile.erddap); join its network:
+    # networks: [web]
+volumes:
+  erddap_data:
