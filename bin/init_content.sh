@@ -15,5 +15,5 @@ sed -i.bak \
   -e 's#<adminInstitution>.*</adminInstitution>#<adminInstitution>Ocean Metrics LLC</adminInstitution>#' \
   "$here/content/setup.xml" && rm -f "$here/content/setup.xml.bak"
 grep -q '<enableCors>' "$here/content/setup.xml" || \
-  sed -i.bak 's#</erddapSetup>#<enableCors>true</enableCors>\n<corsAllowOrigin>*</corsAllowOrigin>\n</erddapSetup>#' "$here/content/setup.xml" && rm -f "$here/content/setup.xml.bak"
+  sed -i.bak 's#</erddapSetup>#<enableCors>true</enableCors>\n</erddapSetup>#' "$here/content/setup.xml" && rm -f "$here/content/setup.xml.bak"
 echo "wrote $here/content/setup.xml (gitignored) — review baseUrl, admin*, enableCors, then docker compose up -d"

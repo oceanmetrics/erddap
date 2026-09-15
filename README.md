@@ -61,5 +61,5 @@ Global CRW 5 km products are read directly from PacIOOS (CORS on, ERDDAP 2.29) a
 ## Notes
 
 - ERDDAP version observed on CoastWatch West Coast on 2026-09-14: 2.31.1.
-- CORS setting: `enableCors` in setup.xml (or `ERDDAP_enableCors=true`), off by default since 2.27; `corsAllowOrigin` restricts origins if wanted.
+- CORS setting: `enableCors` in setup.xml (or `ERDDAP_enableCors=true`), off by default since 2.27. Leave `corsAllowOrigin` UNSET to allow every origin: with `*` ERDDAP 2.31 answers `Access-Control-Allow-Origin: <origin>.origin-not-allowed.invalid` (verified 2026-09-15); set it only to a comma-separated list of origins to restrict.
 - Load: with `<redirect>false</redirect>` the upstream request, reformat and response all pass through this server; keep `ERDDAP_MEMORY` ≥ 2g and watch `/erddap/status.html`.

@@ -16,7 +16,6 @@ services:
       ERDDAP_bigParentDirectory: /erddapData/
       ERDDAP_flagKeyKey: ${ERDDAP_flagKeyKey}
       ERDDAP_enableCors: "true"
-      ERDDAP_corsAllowOrigin: "*"
       ERDDAP_adminInstitution: Ocean Metrics LLC
       ERDDAP_adminInstitutionUrl: https://oceanmetrics.io
       ERDDAP_adminIndividualName: Ben Best
