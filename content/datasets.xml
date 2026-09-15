@@ -17,9 +17,49 @@
   <redirect>false</redirect>
 </dataset>
 
-<dataset type="EDDGridFromErddap" datasetID="noaa_aoml_seascapes_8day" active="true">
+<!-- Seascapes is the one dataset here NOT mirrored with EDDGridFromErddap: the AOML source declares
+     a custom colorBarPalette ("Seascapes") on CLASS, which only exists in their ERDDAP's cptfiles.
+     EDDGridFromErddap copies source attributes verbatim and cannot override them, so on our
+     ERDDAP 2.31 the dataset fails to load with
+       "colorBarPalette=Seascapes must be one of BlackBlueWhite, ... (built-in list)".
+     Mirroring via EDDGridFromDap (their ERDDAP also serves griddap over OPeNDAP) lets us use
+     <addAttributes> to swap in a built-in palette. Everything else is inherited from the source. -->
+<dataset type="EDDGridFromDap" datasetID="noaa_aoml_seascapes_8day" active="true">
   <sourceUrl>https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_seascapes_8day</sourceUrl>
-  <redirect>false</redirect>
+  <reloadEveryNMinutes>10080</reloadEveryNMinutes>
+  <axisVariable>
+    <sourceName>time</sourceName>
+    <destinationName>time</destinationName>
+  </axisVariable>
+  <axisVariable>
+    <sourceName>latitude</sourceName>
+    <destinationName>latitude</destinationName>
+  </axisVariable>
+  <axisVariable>
+    <sourceName>longitude</sourceName>
+    <destinationName>longitude</destinationName>
+  </axisVariable>
+  <dataVariable>
+    <sourceName>CLASS</sourceName>
+    <destinationName>CLASS</destinationName>
+    <dataType>byte</dataType>
+    <addAttributes>
+      <!-- custom "Seascapes" palette is not built into ERDDAP; 33 classes over a Rainbow ramp -->
+      <att name="colorBarPalette">Rainbow</att>
+      <att name="colorBarMinimum" type="double">1.0</att>
+      <att name="colorBarMaximum" type="double">33.0</att>
+      <att name="colorBarNSections">33</att>
+    </addAttributes>
+  </dataVariable>
+  <dataVariable>
+    <sourceName>P</sourceName>
+    <destinationName>P</destinationName>
+    <dataType>float</dataType>
+    <addAttributes>
+      <att name="colorBarMinimum" type="double">0.0</att>
+      <att name="colorBarMaximum" type="double">1.0</att>
+    </addAttributes>
+  </dataVariable>
 </dataset>
 
 </erddapDatasets>
