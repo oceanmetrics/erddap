@@ -33,7 +33,7 @@ smaller memory.
 docker-compose.yml     erddap service (+ optional caddy snippet reference)
 .env.example           ERDDAP_flagKeyKey, ERDDAP_TAG, memory
 content/datasets.xml   dataset definitions (start: three re-served CoastWatch/AOML grids)
-content/setup.xml      NOT committed until reviewed; bootstrap with bin/init_content.sh
+content/setup.xml      gitignored; bootstrap with bin/init_content.sh (template from the image)
 caddy/Caddyfile.erddap vhost block to paste into the host's Caddyfile
 bin/init_content.sh    copies a known-good setup.xml (CalCOFI) and sets institution values
 bin/probe.sh           CORS + Parquet probe used to verify any ERDDAP from a browser's point of view
@@ -41,10 +41,10 @@ bin/probe.sh           CORS + Parquet probe used to verify any ERDDAP from a bro
 
 ## Deployment checklist
 
-- [ ] Decide host (D7 in the private plan): the msens Docker host (already runs Caddy) or a new VM. ERDDAP wants ~2–4 GB RAM and local disk under `/erddapData` for its cache.
-- [ ] DNS: `erddap.oceanmetrics.io` A/CNAME → host (no record exists as of 2026-09-14).
-- [ ] `bin/init_content.sh` → review `content/setup.xml` (baseHttpsUrl, admin*, `enableCors`).
-- [ ] `docker compose up -d --build`; add `caddy/Caddyfile.erddap` to the host Caddyfile; reload.
+- [x] Host: the msens Docker host (16 GB RAM, ~7 GB free on 2026-09-15; Caddy already there). Checkout lives at `/share/github/oceanmetrics/erddap`.
+- [x] DNS: wildcard `*.oceanmetrics.io` A → the host (2026-09-15).
+- [ ] `bin/init_content.sh` (pulls the template from the image) → review `content/setup.xml` (gitignored; real values come from `ERDDAP_*` env in compose).
+- [ ] `cp .env.example .env` (set `ERDDAP_flagKeyKey`), `docker compose up -d` (joins the host Caddy's `server_default` network); host Caddyfile gets one line, `import /share/github/oceanmetrics/erddap/caddy/Caddyfile.erddap`; `docker exec caddy caddy reload --config /etc/caddy/Caddyfile`.
 - [ ] `bin/probe.sh https://erddap.oceanmetrics.io` → expect `Access-Control-Allow-Origin` and a readable `.parquet`.
 - [ ] Confirm each re-served dataset loads (`/erddap/griddap/index.html`) and that a griddap `.parquet` subset for a sanctuary bbox returns in seconds, not minutes (non-redirect mode proxies every byte).
 

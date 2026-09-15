@@ -5,7 +5,7 @@ services:
     image: erddap/erddap:${ERDDAP_TAG:-v2.31.1}
     restart: unless-stopped
     ports:
-      - "8090:8080"
+      - "127.0.0.1:8090:8080"   # local debug only; the public path is Caddy → erddap:8080
     volumes:
       - ./content:/usr/local/tomcat/content/erddap
       - erddap_data:/erddapData
@@ -22,7 +22,12 @@ services:
       ERDDAP_adminIndividualName: Ben Best
       ERDDAP_adminEmail: ben@oceanmetrics.io
       ERDDAP_adminCountry: USA
-    # the host Caddy reverse-proxies erddap:8080 (see caddy/Caddyfile.erddap); join its network:
-    # networks: [web]
+    # the host Caddy (MarineSensitivity/server compose, network `server_default`) reverse-proxies
+    # erddap:8080 (see caddy/Caddyfile.erddap); join that network so the name resolves
+    networks: [caddy]
 volumes:
   erddap_data:
+networks:
+  caddy:
+    name: ${CADDY_NETWORK:-server_default}
+    external: true
