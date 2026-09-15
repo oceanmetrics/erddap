@@ -8,9 +8,9 @@ Sitemap: https://erddap.oceanmetrics.io/erddap/sitemap.xml" 200
   }
   # reject query-less bulk dumps of whole datasets (see CalCOFI 2026-09-08 outage)
   @bulk path_regexp ^/erddap/(tabledap|griddap)/[^/]+\.(csv|csvp|csv0|json|jsonlCSV|nc|parquet|parquetWMeta)$
-  @noquery not query *
   handle @bulk {
-    handle @noquery {
+    @unconstrained expression {http.request.uri.query} == ""
+    handle @unconstrained {
       respond "Add a constraint or subset to your request." 400
     }
   }
