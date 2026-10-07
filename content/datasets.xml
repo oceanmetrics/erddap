@@ -167,6 +167,7 @@
 </dataset>
 
 <!-- https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41anom1day
+     NB the USF copy redirects to coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41anom1day; loads only when that is up
      variables: sstAnom, mask
      daily, 8878 steps 2002-06..present; HUGE: time x lat(17999) x lon(36000), 0.01 deg -->
 <dataset type="EDDGridFromErddap" datasetID="jplMURSST41anom1day" active="true">
@@ -176,6 +177,7 @@
 </dataset>
 
 <!-- https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41mday
+     NB the USF copy redirects to coastwatch.pfeg.noaa.gov/erddap/griddap/jplMURSST41mday; loads only when that is up
      variables: sst, nobs, mask
      monthly, 289 steps 2002-06..present; HUGE: time x lat(17999) x lon(36000), 0.01 deg -->
 <dataset type="EDDGridFromErddap" datasetID="jplMURSST41mday" active="true">

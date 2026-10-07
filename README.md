@@ -56,6 +56,37 @@ bin/probe.sh           CORS + Parquet probe used to verify any ERDDAP from a bro
 | `noaacwNPPVIIRSchlaDaily` | https://coastwatch.noaa.gov/erddap/griddap/noaacwNPPVIIRSchlaDaily | chlorophyll |
 | `noaa_aoml_seascapes_8day` | https://cwcgom.aoml.noaa.gov/erddap/griddap/noaa_aoml_seascapes_8day | categorical seascape classes |
 
+## USF IMaRS grids re-served (2026-10-07)
+
+Source: Tylar Murray's https://erddap.marine.usf.edu/erddap (ERDDAP 2.25, no CORS). Same datasetIDs,
+`EDDGridFromErddap` + `redirect=false`. Probe from the laptop on 2026-10-07: `griddap/<id>.json?time[(last)]`,
+`Access-Control-Allow-Origin` on `/info/<id>/index.json` (ERDDAP echoes the request Origin), and a `.parquet`
+of the last time step (surface depth) over a 0.5° Florida Keys box (24.5–25 N, 81–80.5 W).
+
+| datasetID | variables | json | CORS | parquet | bytes | s |
+| --- | --- | --- | --- | --- | --- | --- |
+| `CMEMS_PHY_MONTHLY` | so (surface only) | 200 | yes | 200 | 1226 | 0.42 |
+| `cmems_salinity` | so (50 depths) | 200 | yes | 200 | 1464 | 0.42 |
+| `cmems_biogeochem_nutrients` | fe, no3, po4, si | 200 | yes | 200 | 1228 | 0.37 |
+| `cmems_biogeochem_phyto` | chl, phyc | 200 | yes | 200 | 1224 | 0.40 |
+| `cmems_biogeochem_pp` | nppv, o2 | 200 | yes | 200 | 1233 | 0.38 |
+| `cmems_biogeochem_carbon` | dissic, ph, talk | 200 | yes | 200 | 1216 | 0.42 |
+| `cmems_biogeochem_co2` | spco2 | 200 | yes | 200 | 1045 | 0.39 |
+| `cmems_biogeochem_zoo` | zooc | 200 | yes | 200 | 1230 | 0.38 |
+| `cmems_biogeochem_optics` | kd | 200 | yes | 200 | 1218 | 0.40 |
+| `cmems_altimetry` | mlotst, tob (bottomT), sob, zos, sea ice | 200 | yes | 200 | 1280 | 0.39 |
+| `IMERG_monthly_global_precip` | precipitation, precipitationQualityIndex, randomError | 200 | yes | 200 | 1340 | 0.39 |
+| `jplMURSST41anom1day` | sstAnom, mask | 404 | yes | 404 | – | – |
+| `jplMURSST41mday` | sst, nobs, mask | 404 | yes | 404 | – | – |
+| `moda_npp_mo_glob` | npp | 200 | yes | 200 | 1400 | 0.46 |
+
+Caveats:
+
+- No `thetao` on the USF server; `cmems_altimetry` (not on the original list) is the only USF source of `mlotst` and bottom temperature (`tob`).
+- `CMEMS_PHY_MONTHLY` holds only surface `so`, and it is NaN everywhere we sampled (also at the source), with ~2-day steps despite the name. Use `cmems_salinity` for salinity.
+- The two MUR datasets on the USF server are themselves redirects to `coastwatch.pfeg.noaa.gov`, which was unreachable from both the laptop and msens on 2026-10-07 (connection timeout), so they did not load. ERDDAP retries failed datasets at each major load (every 15 min), so they should appear once CoastWatch West Coast is back. Both are huge (0.01°, 17999 × 36000 per step; anom1day has 8878 steps); subset tightly.
+- The bare `griddap/<id>.json` is rejected by the Caddy guard (400) by design; add any constraint.
+
 Global CRW 5 km products are read directly from PacIOOS (CORS on, ERDDAP 2.29) and need no proxy.
 
 ## Notes
