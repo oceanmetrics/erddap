@@ -62,4 +62,134 @@
   </dataVariable>
 </dataset>
 
+<!-- ===== USF IMaRS (Tylar Murray) grids, re-served for the sanctuary climate app =====
+     Source: https://erddap.marine.usf.edu/erddap (ERDDAP 2.25, nginx, no CORS). Same datasetIDs as the
+     source. Plain EDDGridFromErddap + redirect=false, as for jplMURSST41 above; none of these declares a
+     custom colorBarPalette. All lon -180..180. Checked 2026-10-07. -->
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/CMEMS_PHY_MONTHLY
+     variables: so (surface salinity only, single depth 0.49 m; despite the name ~2.3-day steps, 462 steps 2022-06..2025-05). NB the source has no thetao
+     time x depth(1) x lat(2041) x lon(4320), 1/12 deg -->
+<dataset type="EDDGridFromErddap" datasetID="CMEMS_PHY_MONTHLY" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/CMEMS_PHY_MONTHLY</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_salinity
+     variables: so
+     monthly, 33 steps 2022-06..2025-02; time x depth(50) x lat(2041) x lon(4320), 1/12 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_salinity" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_salinity</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_nutrients
+     variables: fe, no3, po4, si
+     monthly, 41 steps 2021-10..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_nutrients" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_nutrients</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_phyto
+     variables: chl, phyc
+     monthly, 41 steps 2021-10..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_phyto" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_phyto</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_pp
+     variables: nppv, o2
+     monthly, 41 steps 2021-10..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_pp" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_pp</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_carbon
+     variables: dissic, ph, talk
+     monthly, 41 steps 2021-10..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_carbon" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_carbon</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_co2
+     variables: spco2
+     monthly, 41 steps 2021-10..2025-02; time x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_co2" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_co2</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_zoo
+     variables: zooc
+     monthly, 6 steps 2024-09..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_zoo" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_zoo</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_optics
+     variables: kd
+     monthly, 15 steps 2023-12..2025-02; time x depth(50) x lat(681) x lon(1440), 0.25 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_biogeochem_optics" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_biogeochem_optics</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/cmems_altimetry
+     variables: mlotst, tob (= bottomT), sob, zos, pbo, sea-ice vars (siconc, sithick, ...)
+     not on the original request list; added because it is the only USF source of mlotst and bottom temperature. ~2.3-day steps, 462 steps 2022-06..2025-05; time x lat(2041) x lon(4320), 1/12 deg -->
+<dataset type="EDDGridFromErddap" datasetID="cmems_altimetry" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/cmems_altimetry</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/IMERG_monthly_global_precip
+     variables: precipitation, precipitationQualityIndex, randomError
+     monthly, 333 steps 1998-01..2025-09; time x lat(1800) x lon(3600), 0.1 deg -->
+<dataset type="EDDGridFromErddap" datasetID="IMERG_monthly_global_precip" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/IMERG_monthly_global_precip</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41anom1day
+     variables: sstAnom, mask
+     daily, 8878 steps 2002-06..present; HUGE: time x lat(17999) x lon(36000), 0.01 deg -->
+<dataset type="EDDGridFromErddap" datasetID="jplMURSST41anom1day" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41anom1day</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41mday
+     variables: sst, nobs, mask
+     monthly, 289 steps 2002-06..present; HUGE: time x lat(17999) x lon(36000), 0.01 deg -->
+<dataset type="EDDGridFromErddap" datasetID="jplMURSST41mday" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/jplMURSST41mday</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
+
+<!-- https://erddap.marine.usf.edu/erddap/griddap/moda_npp_mo_glob
+     variables: npp (VGPM)
+     monthly, 257 steps 2002-07..2023-12; time x lat(2160) x lon(4320), 1/12 deg -->
+<dataset type="EDDGridFromErddap" datasetID="moda_npp_mo_glob" active="true">
+  <sourceUrl>https://erddap.marine.usf.edu/erddap/griddap/moda_npp_mo_glob</sourceUrl>
+  <reloadEveryNMinutes>1440</reloadEveryNMinutes>
+  <redirect>false</redirect>
+</dataset>
 </erddapDatasets>
